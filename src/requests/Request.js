@@ -18,6 +18,11 @@ class Request {
         const res = await fetch(this.API_URL + '/repos/' + username + '/' + repository + '/issues/' + id);
          return await res.json();
     }
+
+    async getIssueComments(url){
+        const res = await fetch(url);
+         return await res.json();
+    }
 }
 
 export default Request;
