@@ -100,7 +100,7 @@ class ListView extends React.Component{
       
     }
 
-    return <div className='container mx-auto'>
+    return <div className='container mx-auto'>c
         <div className="flex flex-row"> 
             <input value={this.state.username} onChange={this.handleChangeUsername}  onKeyDown={this.getRepoData} type="text" placeholder="Username" className="px-3 py-3 my-5 mr-2 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
             <input value={this.state.repository} onChange={this.handleChangeRepository} onKeyDown={this.getRepoData} type="text" placeholder="Repository" className="px-3 py-3 my-5 ml-2 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
@@ -115,8 +115,8 @@ class ListView extends React.Component{
           <div onClick={this.handleNext} class="px-4 py-2 font-bold text-gray-500 bg-gray-300 rounded-md hover:bg-blue-400 hover:text-white">
               Next
           </div>
-      </div>
-      : <div></div>
+          </div>
+          : <div></div>
         }
     </div>;
   }
