@@ -108,7 +108,7 @@ class ListView extends React.Component{
       
     }
 
-    return <div className='container sm:mx-auto mx-1'>
+    return <div className='container sm:mx-auto mx-1 mb-2'>
         <div className='grid sm:grid-cols-2 grid-cols-1 gap-5 m-2'>
             <input value={this.state.username} onChange={this.handleChangeUsername}  onKeyDown={this.getRepoData} type="text" placeholder="Username" 
             className="w-full p-3 relative bg-gray-200 rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring"/>
