@@ -9,8 +9,8 @@ class Request {
         return await res.json();
     }
 
-    async getRepoIssues(username, repository){
-        const res = await fetch(this.API_URL + '/repos/' + username + '/' + repository + '/issues');
+    async getRepoIssues(username, repository, page, per_page){
+        const res = await fetch(this.API_URL + '/repos/' + username + '/' + repository + '/issues?page=' + page + '&per_page=' + per_page);
          return await res.json();
     }
 

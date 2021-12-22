@@ -10,28 +10,37 @@ class ListView extends React.Component{
     this.state = {
       username: '',
       repository: '',
-      repo: null
+      repo: null,
+      pageCount: 5,
+      isLoaded: false,
+      currentPage: 1
+    
     }
     
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangeRepository = this.handleChangeRepository.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+    this.handlePrevious = this.handlePrevious.bind(this);
+    this.handleNext = this.handleNext.bind(this);
     this.getRepoData = this.getRepoData.bind(this);
-  }
-
-  componentDidMount() {
-
+    this.fetchData = this.fetchData.bind(this);
   }
 
   getRepoData(event){
     if(event.key === 'Enter'){
-      new Request().getRepoIssues(this.state.username,this.state.repository)
-      .then(res => {
-        console.log(res);
-        this.setState({
-          repo: res,
-        })
-      });
+      this.fetchData();
     }
+  }
+
+  fetchData() {
+    new Request().getRepoIssues(this.state.username,this.state.repository, this.state.currentPage, this.state.pageCount)
+    .then(res => {
+      console.log(res);
+      this.setState({
+        repo: res,
+        isLoaded: true
+      })
+    });
   }
 
   handleChangeUsername(event) {
@@ -40,6 +49,23 @@ class ListView extends React.Component{
   
   handleChangeRepository(event) {
     this.setState({repository: event.target.value});
+  }
+
+  handlePageChange(event) {
+    this.setState({currentPage: event.selected});
+    this.fetchData();
+  }
+
+  handlePrevious(){
+    let newPage = this.state.currentPage - 1;
+    this.setState({currentPage: newPage});
+    this.fetchData();
+  }
+
+  handleNext(){
+    let newPage = this.state.currentPage + 1;
+    this.setState({currentPage: newPage});
+    this.fetchData();
   }
 
   render () {
@@ -56,8 +82,7 @@ class ListView extends React.Component{
       </div>
     </div>
     html.push(error);
-    }
-    else if(this.state.repo.message !== '' && this.state.repo.message !== undefined){
+    }else if(this.state.repo.message !== '' && this.state.repo.message !== undefined){
       let error = <div className="bg-red-100 border-t-4 border-red-400 text-red-700 px-4 py-3 rounded-b shadow-md" role="alert">
         <div className="flex">
           <div className="py-1"><svg className="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
@@ -81,6 +106,18 @@ class ListView extends React.Component{
             <input value={this.state.repository} onChange={this.handleChangeRepository} onKeyDown={this.getRepoData} type="text" placeholder="Repository" className="px-3 py-3 my-5 ml-2 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
         </div>
         {html}
+        {
+          this.state.repo ?
+          <div class="flex justify-center items-center space-x-1 mt-3">
+          <div href="#" onClick={this.handlePrevious} class="flex items-center px-4 py-2 text-gray-500 bg-gray-300 rounded-md">
+              Previous
+          </div>
+          <div onClick={this.handleNext} class="px-4 py-2 font-bold text-gray-500 bg-gray-300 rounded-md hover:bg-blue-400 hover:text-white">
+              Next
+          </div>
+      </div>
+      : <div></div>
+        }
     </div>;
   }
 }
