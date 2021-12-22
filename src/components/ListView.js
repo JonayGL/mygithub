@@ -1,5 +1,5 @@
 import '../App.css';
-import Card from './Card';
+import Issue from './Issue';
 import React from 'react';
 import Request from '../requests/Request';
 
@@ -14,6 +14,7 @@ class ListView extends React.Component{
       pageCount: 5,
       isLoaded: false,
       currentPage: 1,
+      showPagination: false
     }
     
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -34,11 +35,19 @@ class ListView extends React.Component{
   fetchData() {
     new Request().getRepoIssues(this.state.username,this.state.repository, this.state.currentPage, this.state.pageCount)
     .then(res => {
-      console.log(res);
-      this.setState({
-        repo: res,
-        isLoaded: true
-      })
+      if(res.message !== '' && res.message !== undefined){
+        this.setState({
+          repo: res,
+          isLoaded: true,
+          showPagination: false
+        })
+      }else{
+        this.setState({
+          repo: res,
+          isLoaded: true,
+          showPagination: true
+        })
+      }
     });
   }
 
@@ -94,7 +103,7 @@ class ListView extends React.Component{
       html.push(error);
     }else{ //Show results
       this.state.repo.forEach(issue => {
-        html.push(<Card issue={issue} username={this.state.username} repository={this.state.repository}/>);  
+        html.push(<Issue issue={issue} username={this.state.username} repository={this.state.repository}/>);  
       });
       
     }
@@ -109,7 +118,7 @@ class ListView extends React.Component{
         </div>
         {html}
         {
-          this.state.repo ?
+          this.state.showPagination ?
           <div class="flex justify-center items-center space-x-1 mt-3">
           <div href="#" onClick={this.handlePrevious} class="flex items-center px-4 py-2 text-gray-500 bg-gray-300 rounded-md">
               Previous

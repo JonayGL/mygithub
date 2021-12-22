@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import ListView from './components/ListView';
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
-import CardDetail from './components/CardDetail';
+import IssueDetail from './components/IssueDetail';
 
 class App extends React.Component {
   constructor(props){
@@ -15,7 +15,7 @@ class App extends React.Component {
       <Navbar/>
       <Routes>
         <Route exact path='/' element={<ListView/>}/>
-        <Route path=':user/:repo/issue/:id' element={<CardDetail/>}/>
+        <Route path=':user/:repo/issue/:id' element={<IssueDetail/>}/>
       </Routes>
     </div>
   }

@@ -5,7 +5,7 @@ import Request from '../requests/Request';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-function CardDetail() {
+function IssueDetail() {
     const { user, repo, id } = useParams();
     const [issue, setIssue] = useState(null);
     const [comments, setComments] = useState(null);
@@ -99,4 +99,4 @@ function CardDetail() {
     
 }
 
-export default CardDetail;
+export default IssueDetail;

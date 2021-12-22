@@ -4,14 +4,8 @@ class Request {
         this.API_URL = "https://api.github.com"
     }
 
-    async getRepo(username, repository){
-       const res = await fetch(this.API_URL + '/repos/' + username + '/' + repository);
-        return await res.json();
-    }
-
     async getRepoIssues(username, repository, page, per_page){
         let url = this.API_URL + '/repos/' + username + '/' + repository + '/issues?page=' + page + '&per_page=' + per_page;
-        console.log(url);
         const res = await fetch(url);
          return await res.json();
     }

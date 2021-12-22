@@ -2,13 +2,7 @@ import React from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 
-class Card extends React.Component {
-
-  constructor(props){
-    super(props)
-
-    this.showDetails = this.showDetails.bind(this);
-  }
+class Issue extends React.Component {
 
   formatData(dateString){
     var date = new Date(dateString);
@@ -60,4 +54,4 @@ class Card extends React.Component {
   }
 }
 
-export default Card;
+export default Issue;
