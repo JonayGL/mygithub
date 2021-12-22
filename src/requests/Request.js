@@ -10,7 +10,9 @@ class Request {
     }
 
     async getRepoIssues(username, repository, page, per_page){
-        const res = await fetch(this.API_URL + '/repos/' + username + '/' + repository + '/issues?page=' + page + '&per_page=' + per_page);
+        let url = this.API_URL + '/repos/' + username + '/' + repository + '/issues?page=' + page + '&per_page=' + per_page;
+        console.log(url);
+        const res = await fetch(url);
          return await res.json();
     }
 
